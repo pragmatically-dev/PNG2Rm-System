@@ -61,5 +61,10 @@ The System is implemented using Go and leverages gRPC for communication. It prov
    ```bash
    $remarkable: ~/ ./client &
    ```
-now you should be able to convert your screenshots to rmlines in less than 4 sec
+
+---
+
+⚠️ Please be sure to have webinterface-onboot ⚠️
+
+Now you should be able to convert your screenshots to rmlines in less than 4 sec
 
