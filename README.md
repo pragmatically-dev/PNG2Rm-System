@@ -34,9 +34,32 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ## How to setup (locally):
 ### Server:
+1. **Install Go and necessary dependencies**:
+   - Ensure you have Go installed on your system. You can download and install it from [golang.org](https://golang.org/).
+   - Set up your development environment to work with Go. Configure `$GOPATH` and add `$GOPATH/bin` to your `$PATH`.
+
+2. **Create the `server-config.yaml` file**:
+   - This file should contain the necessary configuration for the server. Create a file named `server-config.yaml` in the same directory as the `main.go` file with the following content:
+
+     ```yaml
+     image_folder: "/path/to/image/folder"
+     run_path: "/path/to/run/path"
+     server_address: "localhost:4040"
+     ```
+
+   - Adjust the values of `image_folder`, `run_path`, and `server_address` according to your needs.
+
 
 ---
 
 ### Client (tablet):
-Copy the client and the config.yaml to the device
+1. **Transfrer the client binary and the config yaml file to the remarkable**:
+   - After transfering the files you have to edit the config file with nano acording to your server config
+   you can find the ip address of the server by running `ifconfig` or `ipconfig` 
+   
+   then:
+   ```bash
+   $remarkable: ~/ ./client &
+   ```
+now you should be able to convert your screenshots to rmlines in less than 4 sec
 
