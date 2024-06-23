@@ -65,9 +65,11 @@ https://github.com/pragmatically-dev/PNG2Rm-System/blob/master/doc/de8466ca-0f8a
 
 ### Client (tablet):
 1. **Transfrer the client binary and the config yaml file to the remarkable**:
+
    - After transfering the files you have to edit the config file with nano acording to your server config
    you can find the ip address of the server by running `ifconfig` or `ipconfig` 
-   
+   it is important to mention that the client and the config file must be on the same path
+   (I have both on /home/root/) 
    then:
    ```bash
    $remarkable: ~/ ./client &
