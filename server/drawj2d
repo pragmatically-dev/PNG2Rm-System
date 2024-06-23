@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [ "$(uname)" == "Linux" ]; then
+	SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+else
+	# Mac OS X (Darwin)
+	SCRIPT_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+fi
+
+java -jar "$SCRIPT_DIR"/drawj2d.jar "$@"

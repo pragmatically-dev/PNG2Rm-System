@@ -1,0 +1,24 @@
+syntax ="proto3";
+
+package  png2rm;
+
+option go_package = "png2rm/";
+
+message UploadPNGRequest{
+    oneof data {
+        string filename=1;
+        bytes data_chunck=2;
+    }
+}
+
+message UploadPNGResponse{
+    oneof data {
+        string docname=1;
+        bytes data_chunck=2;
+    }
+}
+
+
+service PNG2RmService {
+    rpc UploadAndConvert(stream UploadPNGRequest) returns (stream UploadPNGResponse) {};
+}
