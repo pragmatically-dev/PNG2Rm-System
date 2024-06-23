@@ -27,8 +27,11 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 ![alt text](doc/5af92af8-47d3-43cf-aa18-f74750ed8da5.jpeg)
 
 ### Preview
+<video width="320" height="240" controls>
+  <source src="doc/de8466ca-0f8a-41e8-8f0f-f15885063855.mp4" type="video/mp4">
+</video>
 
-![alt text](doc/de8466ca-0f8a-41e8-8f0f-f15885063855.mp4)
+
 ## Requirements:
 - Golang: https://go.dev/dl
 - Protoc: https://grpc.io/docs/protoc-installation/
