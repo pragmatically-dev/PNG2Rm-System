@@ -28,7 +28,7 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ### Preview
 
-https://github.com/pragmatically-dev/PNG2Rm-System/blob/master/doc/preview.mov
+https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 
 ## Requirements:
 - Golang: https://go.dev/dl
