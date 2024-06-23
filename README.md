@@ -28,7 +28,7 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ### Preview
 
-https://github.com/pragmatically-dev/PNG2Rm-System/blob/master/doc/preview.mp4
+https://github.com/pragmatically-dev/PNG2Rm-System/blob/master/doc/preview.mov
 
 ## Requirements:
 - Golang: https://go.dev/dl
@@ -70,8 +70,10 @@ https://github.com/pragmatically-dev/PNG2Rm-System/blob/master/doc/preview.mp4
    you can find the ip address of the server by running `ifconfig` or `ipconfig` 
    it is important to mention that the client and the config file must be on the same path
    (I have both on /home/root/) 
+
    then:
    ```bash
+   $remarkable: ~/ mkdir rmdoc
    $remarkable: ~/ ./client &
    ```
 
@@ -85,7 +87,7 @@ Now you should be able to convert your screenshots to rmlines in less than 4 sec
 ---
 
 # Knowloadge base:
-- The Wizzard: 
+ 
 - https://www.youtube.com/playlist?list=PLy_6D98if3UJd5hxWNfAqKMr15HZqFnqf
 
 - https://blog.stackademic.com/go-concurrency-visually-explained-select-statement-b546596c8e6b
