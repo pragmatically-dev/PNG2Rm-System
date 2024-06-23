@@ -26,7 +26,9 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ![alt text](doc/5af92af8-47d3-43cf-aa18-f74750ed8da5.jpeg)
 
+### Preview
 
+![alt text](doc/de8466ca-0f8a-41e8-8f0f-f15885063855.mov)
 ## Requirements:
 - Golang: https://go.dev/dl
 - Protoc: https://grpc.io/docs/protoc-installation/
@@ -80,6 +82,7 @@ Now you should be able to convert your screenshots to rmlines in less than 4 sec
 ---
 
 # Knowloadge base:
+- The Wizzard: 
 - https://www.youtube.com/playlist?list=PLy_6D98if3UJd5hxWNfAqKMr15HZqFnqf
 
 - https://blog.stackademic.com/go-concurrency-visually-explained-select-statement-b546596c8e6b
