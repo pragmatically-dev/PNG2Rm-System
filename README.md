@@ -65,7 +65,7 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ---
 
-⚠️ Please be sure to have webinterface-onboot ⚠️
+⚠️ Please be sure to have rm-hacks and webinterface-onboot Installed⚠️
 
 Now you should be able to convert your screenshots to rmlines in less than 4 sec
 
@@ -79,4 +79,4 @@ Now you should be able to convert your screenshots to rmlines in less than 4 sec
 
 - https://blog.stackademic.com/go-concurrency-visually-explained-channel-c6f88070aafa
 
-- https://blog.stackademic.com/go-concurrency-visually-explained-select-statement-b546596c8e6b
+- https://blog.stackademic.com/go-concurrency-visually-explained-select-statement-b546596c8e6bs
