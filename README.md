@@ -22,6 +22,7 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 ## Requirements:
 - Golang: https://go.dev/dl
+- Protoc: https://grpc.io/docs/protoc-installation/
 ### Server side:
 - Protoc: https://grpc.io/docs/protoc-installation
 - Drawj2d: https://sourceforge.net/projects/drawj2d/
