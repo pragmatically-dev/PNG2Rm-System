@@ -203,7 +203,7 @@ func uploadPNGAndConvert(png2rmClient png2rm.PNG2RmServiceClient, filepath strin
 
 		// Establecer el tipo de contenido
 		req.Header.Set("Content-Type", writer.FormDataContentType())
-		req.SetBasicAuth("nieva", "ekuwthcsf6-")
+
 		// Enviar la petición
 		client := &http.Client{}
 		resp, err := client.Do(req)
