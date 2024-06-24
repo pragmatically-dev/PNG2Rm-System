@@ -8,6 +8,8 @@ import (
 
 	png2rm "github.com/pragmatically-dev/png2rm/png2rm"
 	"github.com/pragmatically-dev/png2rm/service"
+	_ "google.golang.org/grpc/encoding/gzip"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"gopkg.in/yaml.v2"
