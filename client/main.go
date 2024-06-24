@@ -241,7 +241,7 @@ func watchForScreenshots(dirToSearch string, filePrefix string, client png2rm.PN
 
 				if (event.Has(fsnotify.Create)) && (strings.HasPrefix(filepath.Base(event.Name), filePrefix)) {
 
-					//fmt.Printf("** File found: %s **\n", event.Name)
+					//DON'T REMOVE: Remarkable screenshot takes almost a sec to save on the filesystm
 					time.Sleep(1200 * time.Millisecond)
 					go uploadPNGAndConvert(client, event.Name, dirToSave)
 					time.Sleep(5 * time.Second)
