@@ -64,22 +64,20 @@ https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 ---
 
 ### Client (tablet):
-1. **Transfrer the client binary and the config yaml file to the remarkable**:
-
-   - After transfering the files you have to edit the config file with nano acording to your server config
-   you can find the ip address of the server by running `ifconfig` or `ipconfig` 
-   it is important to mention that the client and the config file must be on the same path
-   (I have both on /home/root/) 
-
-   then:
-   ```bash
-   $remarkable: ~/ mkdir rmdoc
-   $remarkable: ~/ ./client &
-   ```
-
----
 
 ⚠️ Please be sure to have rm-hacks and webinterface-onboot Installed⚠️
+
+1. **Transfrer the client installer tar to the remarkable:
+
+   then:
+   - 
+   ```bash
+   $remarkable: ~/ tar -xvf png2rm_arm.tar
+   $remarkable: ~/ cd png2rm_arm-installer
+   $remarkable: ~/ ./install.sh
+
+   ```
+---
 
 Now you should be able to convert your screenshots to rmlines in less than 4 sec
 

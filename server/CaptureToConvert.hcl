@@ -1,1 +1,0 @@
-image /home/nieva/Proyectos/png2rm/server/ToConvert/Screenshot_20240623_234914.png 300 0 0 1.32
