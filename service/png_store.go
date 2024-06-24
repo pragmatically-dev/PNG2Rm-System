@@ -2,9 +2,7 @@ package service
 
 import (
 	"bytes"
-	"compress/gzip"
 	"fmt"
-	"io"
 	"os"
 	"sync"
 )
@@ -33,21 +31,15 @@ func NewPNGStore(imageFolder string) *DiskPNGStore {
 
 func (store *DiskPNGStore) Save(filename string, imageData bytes.Buffer) (string, error) {
 
-	reader := bytes.NewReader(imageData.Bytes())
-	gzipreader, err := gzip.NewReader(reader)
-	if err != nil {
-		return "", err
-	}
-
-	decompressedPNG, err := io.ReadAll(gzipreader)
-	if err != nil {
-		return "", err
-	}
 	imagePath := fmt.Sprintf("%s/%s", store.imageFolder, filename)
-
-	err = os.WriteFile(imagePath, decompressedPNG, os.ModeType)
+	file, err := os.Create(imagePath)
 	if err != nil {
-		return "", fmt.Errorf("cannot write the image")
+		return "", fmt.Errorf("Cannot create the image\n")
+	}
+
+	_, err = imageData.WriteTo(file)
+	if err != nil {
+		return "", fmt.Errorf("Cannot write the image\n")
 	}
 
 	store.mutex.Lock()
