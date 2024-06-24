@@ -114,10 +114,6 @@ func uploadPNGAndConvert(png2rmClient png2rm.PNG2RmServiceClient, filepath strin
 
 			if docname == "" {
 				docname = res.GetDocname()
-
-				//if docname != "" {
-				//fmt.Printf("Received docname: %s\n", docname)
-				//}
 			}
 
 			chunk := res.GetDataChunck()
@@ -152,6 +148,7 @@ func uploadPNGAndConvert(png2rmClient png2rm.PNG2RmServiceClient, filepath strin
 		return err
 	}
 
+	fmt.Printf("Uploading %s to the Rm", docname)
 	go postRmDocToWebInterface(fmt.Sprintf("%s/%s", dirToSave, docname))
 
 	return nil
@@ -274,7 +271,7 @@ func deleteFile(filepath string) error {
 }
 
 func main() {
-	configFile, err := os.ReadFile("config.yaml")
+	configFile, err := os.ReadFile("/home/root/.config/png2rm/config.yaml")
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
