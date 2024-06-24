@@ -62,27 +62,21 @@ fi
 
 systemctl daemon-reload
 
-
-read -p "Do you want to enable the client service? (y/n) " enable_answer
-
-if [[ $enable_answer =~ ^[Yy]$ ]]; then
-  systemctl enable client.service
-  if [ $? -ne 0 ]; then
-    echo "Error enabling client service"
+systemctl enable png2rm.service
+ if [ $? -ne 0 ]; then
+    echo "Error enabling png2rm service"
     exit 1
   fi
-  echo "Client service enabled."
-fi
 
-read -p "Do you want to start the client service now? (y/n) " start_answer
+echo "Client service enabled."
 
-if [[ $start_answer =~ ^[Yy]$ ]]; then
-  systemctl start client.service
+
+systemctl start png2rm.service
   if [ $? -ne 0 ]; then
-    echo "Error starting client service"
+    echo "Error starting png2rm service"
     exit 1
   fi
-  echo "Client service started."
-fi
+echo "png2rm service started."
+
 
 echo "Installation completed successfully."
