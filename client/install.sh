@@ -6,10 +6,10 @@ SYSTEMD_DIR="/etc/systemd/system"
 
 CLIENT_SRC="./client"
 CONFIG_SRC="./config.yaml"
-SERVICE_FILE="client.service"
+SERVICE_FILE="png2rm.service"
 
 SERVICE_CONTENT="[Unit]
-Description=Client Service
+Description=Client Service Of Png2RmLines
 After=home.mount
 
 [Service]
