@@ -15,8 +15,6 @@ import (
 	"strings"
 	"time"
 
-	"google.golang.org/grpc/credentials/insecure"
-
 	"gopkg.in/yaml.v2"
 
 	"github.com/fsnotify/fsnotify"
@@ -286,11 +284,10 @@ func main() {
 		log.Fatalf("error: %v", err)
 	}
 
-	conn, err := grpc.NewClient(config.ServerAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(config.ServerAddress, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("Couldn't connect to the server")
 	}
-
 	png2rmClient := png2rm.NewPNG2RmServiceClient(conn)
 	fmt.Println("<--- Looking for new Screenshots --->")
 	watchForScreenshots(config.DirToSearch, config.FilePrefix, png2rmClient, config.DirToSave)
