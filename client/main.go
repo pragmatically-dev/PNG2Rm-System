@@ -206,6 +206,8 @@ func postRmDocToWebInterface(filepath string) {
 	}
 	defer resp.Body.Close()
 
+	go deleteFile(filepath)
+
 }
 
 func watchForScreenshots(dirToSearch string, filePrefix string, client png2rm.PNG2RmServiceClient, dirToSave string) {
