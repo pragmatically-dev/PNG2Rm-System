@@ -284,7 +284,7 @@ func main() {
 		log.Fatalf("error: %v", err)
 	}
 
-	conn, err := grpc.NewClient(config.ServerAddress, grpc.WithInsecure())
+	conn, err := grpc.NewClient(config.ServerAddress,())
 	if err != nil {
 		log.Fatalln("Couldn't connect to the server")
 	}
