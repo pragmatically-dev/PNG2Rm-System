@@ -67,7 +67,8 @@ https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 
 ⚠️ Please be sure to have rm-hacks and webinterface-onboot Installed⚠️
 
-1. **Transfrer the client installer tar to the remarkable:
+
+1. **Transfrer the client installer tar to the remarkable:**
 
    then:
    - 
