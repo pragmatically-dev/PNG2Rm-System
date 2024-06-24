@@ -136,8 +136,6 @@ func uploadPNGAndConvert(png2rmClient png2rm.PNG2RmServiceClient, filepath strin
 			return
 		}
 
-		defer file.Close()
-
 		_, err = imageData.WriteTo(file)
 		if err != nil {
 			responseErrorChannel <- err
@@ -154,68 +152,63 @@ func uploadPNGAndConvert(png2rmClient png2rm.PNG2RmServiceClient, filepath strin
 		return err
 	}
 
-	go func() {
-
-		url := "http://10.11.99.1"
-
-		// Ruta del archivo a enviar
-		filePath := fmt.Sprintf("%s/%s", dirToSave, docname)
-
-		// Crear un buffer para almacenar el cuerpo de la petición
-		var requestBody bytes.Buffer
-		writer := multipart.NewWriter(&requestBody)
-
-		// Abrir el archivo
-		file, err := os.Open(filePath)
-		if err != nil {
-			fmt.Println("Error al abrir el archivo:", err)
-			return
-		}
-		defer file.Close()
-
-		// Crear un form file field
-		part, err := writer.CreateFormFile("file", fp.Base(file.Name()))
-		if err != nil {
-			fmt.Println("Error al crear el form file field:", err)
-			return
-		}
-
-		// Copiar el contenido del archivo al form field
-		_, err = io.Copy(part, file)
-		if err != nil {
-			fmt.Println("Error al copiar el contenido del archivo:", err)
-			return
-		}
-
-		// Cerrar el writer para que se complete el multipart form
-		err = writer.Close()
-		if err != nil {
-			fmt.Println("Error al cerrar el writer:", err)
-			return
-		}
-
-		// Crear la petición HTTP
-		req, err := http.NewRequest("POST", url+"/upload", &requestBody)
-		if err != nil {
-			fmt.Println("Error al crear la petición:", err)
-			return
-		}
-
-		// Establecer el tipo de contenido
-		req.Header.Set("Content-Type", writer.FormDataContentType())
-
-		// Enviar la petición
-		client := &http.Client{}
-		resp, err := client.Do(req)
-		if err != nil {
-			fmt.Println("Error al enviar la petición:", err)
-			return
-		}
-		defer resp.Body.Close()
-
-	}()
+	go postRmDocToWebInterface(fmt.Sprintf("%s/%s", dirToSave, docname))
 
 	return nil
+}
+func postRmDocToWebInterface(filepath string) {
+	url := "http://10.11.99.1"
+
+	file, err := os.Open(filepath)
+	if err != nil {
+		fmt.Println("Error al abrir el archivo:", err)
+		return
+	}
+	defer file.Close()
+
+	var requestBody bytes.Buffer
+	writer := multipart.NewWriter(&requestBody)
+
+	// Create a form file field
+	part, err := writer.CreateFormFile("file", fp.Base(file.Name()))
+	if err != nil {
+		fmt.Println("Error creating the form file field:", err)
+		return
+	}
+
+	// Copy the file content to the form field
+	_, err = io.Copy(part, file)
+	if err != nil {
+		fmt.Println("Error copying the file content:", err)
+		return
+	}
+
+	// Close the writer to complete the multipart form
+	err = writer.Close()
+	if err != nil {
+		fmt.Println("Error closing the writer:", err)
+		return
+	}
+
+	// Create the HTTP request
+	req, err := http.NewRequest("POST", url+"/upload", &requestBody)
+	if err != nil {
+		fmt.Println("Error creating the request:", err)
+		return
+	}
+
+	// Set the content type
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+
+	// Send the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending the request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
 }
 
 func watchForScreenshots(dirToSearch string, filePrefix string, client png2rm.PNG2RmServiceClient, dirToSave string) {
