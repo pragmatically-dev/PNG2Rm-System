@@ -67,12 +67,12 @@ https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 ⚠️ Please be sure to have rm-hacks and webinterface-onboot Installed⚠️
 
 
-1. **Transfrer the png2rm_arm-installer tar to the remarkable:**
+1. **Transfrer the client installer tar to the remarkable:**
 
    then:
    - 
    ```bash
-   $remarkable: ~/ tar -xvf png2rm_arm-installer.tar
+   $remarkable: ~/ tar -xvf png2rm_arm.tar
    $remarkable: ~/ cd png2rm_arm-installer
    $remarkable: ~/ ./install.sh
 
