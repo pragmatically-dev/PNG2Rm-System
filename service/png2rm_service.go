@@ -111,7 +111,7 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 
 	// Stream the Remarkable document back to the client in chunks
 	reader := bufio.NewReader(rmdoc) // Create a buffered reader for the document
-	buff := make([]byte, 1024*16)    // Buffer to hold file chunks
+	buff := make([]byte, 1024*32)    // Buffer to hold file chunks
 
 	for {
 		n, err := reader.Read(buff) // Read a chunk of the document
