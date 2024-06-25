@@ -10,7 +10,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
-	"path/filepath"
+
 	fp "path/filepath"
 	"strings"
 	"time"
@@ -240,7 +240,7 @@ func watchForScreenshots(dirToSearch string, filePrefix string, client png2rm.PN
 					return
 				}
 
-				if (event.Has(fsnotify.Create)) && (strings.HasPrefix(filepath.Base(event.Name), filePrefix)) {
+				if (event.Has(fsnotify.Create)) && (strings.HasPrefix(fp.Base(event.Name), filePrefix)) {
 
 					//DON'T REMOVE: Remarkable screenshot takes almost a sec to save on the filesystm
 					time.Sleep(1200 * time.Millisecond)

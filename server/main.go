@@ -10,7 +10,7 @@ import (
 	"github.com/pragmatically-dev/png2rm/service"
 
 	"google.golang.org/grpc"
-	_ "google.golang.org/grpc/encoding/gzip"
+
 	"google.golang.org/grpc/reflection"
 	"gopkg.in/yaml.v2"
 )
