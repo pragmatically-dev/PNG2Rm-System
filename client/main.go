@@ -21,6 +21,7 @@ import (
 	png2rm "github.com/pragmatically-dev/png2rm/png2rm"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 // Config structure to hold YAML configuration
@@ -283,11 +284,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-
-	conn, err := grpc.NewClient(config.ServerAddress,())
+	conn, err := grpc.NewClient(config.ServerAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalln("Couldn't connect to the server")
 	}
+
 	png2rmClient := png2rm.NewPNG2RmServiceClient(conn)
 	fmt.Println("<--- Looking for new Screenshots --->")
 	watchForScreenshots(config.DirToSearch, config.FilePrefix, png2rmClient, config.DirToSave)
