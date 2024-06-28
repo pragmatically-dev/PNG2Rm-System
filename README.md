@@ -33,7 +33,7 @@ https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 - Golang: https://go.dev/dl
 - Protoc: https://grpc.io/docs/protoc-installation/
 ### Server side:
-- Protoc: https://grpc.io/docs/protoc-installation
+
 - Drawj2d: https://sourceforge.net/projects/drawj2d/
 
 ### Client side (tablet):
