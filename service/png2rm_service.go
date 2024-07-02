@@ -3,6 +3,8 @@ package service
 import (
 	"bufio" // Buffered I/O package
 	"bytes" // Bytes manipulation package
+	"image"
+	"image/draw"
 
 	// Context for managing deadlines and cancellation signals
 	"fmt" // Formatting package
@@ -68,21 +70,35 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 		return logError(status.Errorf(codes.InvalidArgument, "no filename provided"))
 	}
 
-	// Save the received PNG file using the PNGStore
+	/* // Save the received PNG file using the PNGStore
 	pngFilename, err := server.pngStore.Save(filename, imageData)
 	if err != nil { // Handle error in saving the PNG file
 		return logError(status.Errorf(codes.Internal, "cannot save image: %v", err))
 	}
+	*/
+	img, _, err := image.Decode(&imageData)
+	if err != nil {
+		return logError(status.Errorf(codes.Internal, "cannot decode image: %v", err))
 
-	decodedImg := remarkablepage.LaplacianEdgeDetection(server.runPath + "/ToConvert/" + pngFilename)
+	}
+	bounds := img.Bounds()
+	gray := image.NewGray(bounds)
+	draw.Draw(gray, bounds, img, bounds.Min, draw.Src)
+	blur, _ := remarkablepage.LaplacianGray(gray, remarkablepage.CBorderConstant, remarkablepage.Gaussian)
+	imgD, _ := remarkablepage.LaplacianGray(blur, remarkablepage.CBorderConstant, remarkablepage.K8)
+
+	width, height := img.Bounds().Max.X, img.Bounds().Max.Y
+	horLines := remarkablepage.GetHorizontalLines(remarkablepage.BuildBooleanMatrix(imgD), width, height)
+
+	decodedImg := remarkablepage.DrawLines(horLines, float32(width), float32(height))
 	if decodedImg == nil {
 		return logError(status.Errorf(codes.Internal, "cannot decode to gray image: %v", err))
 	}
 
 	// Define the path of the resulting Remarkable document
-	rmdocPath := fmt.Sprintf("%s/%s.rmdoc", server.runPath, pngFilename)
+	rmdocPath := fmt.Sprintf("%s/%s.rmdoc", server.runPath, filename)
 	fmt.Println(rmdocPath)
-	rmzip, rmzipname := remarkablepage.CreateRmDoc(pngFilename, decodedImg)
+	rmzip, rmzipname := remarkablepage.CreateRmDoc(filename, decodedImg)
 
 	// Send the document name as the first response to the client
 	res := &png2rm.UploadPNGResponse{
