@@ -74,7 +74,7 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 		return logError(status.Errorf(codes.Internal, "cannot save image: %v", err))
 	}
 
-	decodedImg := remarkablepage.LaplacianEdgeDetection(pngFilename)
+	decodedImg := remarkablepage.LaplacianEdgeDetection(server.runPath + "/ToConvert/" + pngFilename)
 	if decodedImg == nil {
 		return logError(status.Errorf(codes.Internal, "cannot decode to gray image: %v", err))
 	}
