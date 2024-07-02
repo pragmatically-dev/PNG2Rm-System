@@ -8,7 +8,7 @@
 
 
 ## Overview
-The System is implemented using Go and leverages gRPC for communication. It provides a server that can receive PNG files in chunks, save them, convert them using an external tool (drawj2d), and stream the resulting Remarkable document back to the client.
+The System is implemented using Go and leverages gRPC for communication. It provides a server that can receive PNG files in chunks, save them, convert them using ~~an external tool (drawj2d)~~ the PoC-drawj2d-port-go, and stream the resulting Remarkable document back to the client.
 
 ### Special Acknowledgment to:
 >*This wouldn't have been possible without your help and incredible developments.*
@@ -21,7 +21,7 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 
 --- 
 
-### How it works:
+### How it works (Now the server is in charge of the conversion using the PoC):
 
 ![alt text](doc/5af92af8-47d3-43cf-aa18-f74750ed8da5.jpeg)
 
@@ -30,11 +30,10 @@ The System is implemented using Go and leverages gRPC for communication. It prov
 https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
 
 ## Requirements:
-- Golang: https://go.dev/dl
+
 - Protoc: https://grpc.io/docs/protoc-installation/
 ### Server side:
-- Protoc: https://grpc.io/docs/protoc-installation
-- Drawj2d: https://sourceforge.net/projects/drawj2d/
+- Golang: https://go.dev/dl
 
 ### Client side (tablet):
 - rm-hacks (enables screenshot feature): https://github.com/mb1986/rm-hacks
@@ -79,7 +78,7 @@ https://youtube.com/shorts/NGzp8g97Z1Y?si=tWxixrLJTe--_qKd
    ```
 ---
 
-Now you should be able to convert your screenshots to rmlines in less than 4 sec
+Now you should be able to convert your screenshots to rmlines in 3 sec
 
 
 ---
