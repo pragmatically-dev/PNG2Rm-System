@@ -3,16 +3,16 @@ package service
 import (
 	"bufio" // Buffered I/O package
 	"bytes" // Bytes manipulation package
-	"context"
 
 	// Context for managing deadlines and cancellation signals
-	"fmt"     // Formatting package
-	"io"      // Basic I/O interface
-	"log"     // Logging package
-	"os"      // Operating system package for file handling
-	"os/exec" // Executing external commands
+	"fmt" // Formatting package
+	"io"  // Basic I/O interface
+	"log" // Logging package
 
-	"github.com/contiv/executor"
+	// Operating system package for file handling
+	// Executing external commands
+
+	"github.com/pragmatically-dev/PoC-drawj2d-port-go/remarkablepage"
 	"github.com/pragmatically-dev/png2rm/png2rm" // Custom package for PNG to Remarkable service
 	"google.golang.org/grpc/codes"               // gRPC status codes
 	"google.golang.org/grpc/status"              // gRPC error handling
@@ -74,35 +74,20 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 		return logError(status.Errorf(codes.Internal, "cannot save image: %v", err))
 	}
 
-	// Create an HCL file necessary for the conversion process
-	if err := createHCLFile(server.runPath, pngFilename); err != nil { // Handle error in creating HCL file
-		return logError(status.Errorf(codes.Internal, "cannot create HCL file: %v", err))
+	decodedImg := remarkablepage.LaplacianEdgeDetection(pngFilename)
+	if decodedImg == nil {
+		return logError(status.Errorf(codes.Internal, "cannot decode to gray image: %v", err))
 	}
 
-	// Prepare the command to convert PNG to Remarkable document using drawj2d
-	cmd := exec.Command("./drawj2d", "-Trmdoc", fmt.Sprintf("%s/CaptureToConvert.hcl", server.runPath), "-o", fmt.Sprintf("%s/%s.rmdoc", server.runPath, pngFilename))
-	exec := executor.New(cmd)
-	exec.Start()
-	er, err := exec.Wait(context.Background())
-
-	fmt.Printf("Conversion Exit Code: %d\n", er.ExitStatus)
-	if er.ExitStatus != 0 {
-		return logError(status.Errorf(codes.Internal, "Drawj2d Error : %v", err))
-
-	}
 	// Define the path of the resulting Remarkable document
 	rmdocPath := fmt.Sprintf("%s/%s.rmdoc", server.runPath, pngFilename)
 	fmt.Println(rmdocPath)
-	rmdoc, err := os.Open(rmdocPath) // Open the resulting Remarkable document file
-	if err != nil {                  // Handle error in opening the document file
-		return logError(status.Errorf(codes.Internal, "cannot open rmdoc file: %v", err))
-	}
-	defer rmdoc.Close() // Ensure the file is closed after processing
+	rmzip, rmzipname := remarkablepage.CreateRmDoc(pngFilename, decodedImg)
 
 	// Send the document name as the first response to the client
 	res := &png2rm.UploadPNGResponse{
 		Data: &png2rm.UploadPNGResponse_Docname{
-			Docname: pngFilename + ".rmdoc",
+			Docname: rmzipname,
 		},
 	}
 	if err := stream.Send(res); err != nil { // Handle error in sending the response
@@ -110,7 +95,7 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 	}
 
 	// Stream the Remarkable document back to the client in chunks
-	reader := bufio.NewReader(rmdoc) // Create a buffered reader for the document
+	reader := bufio.NewReader(rmzip) // Create a buffered reader for the document
 	buff := make([]byte, 1024*32)    // Buffer to hold file chunks
 
 	for {
@@ -131,23 +116,6 @@ func (server *PNG2RmServiceServer) UploadAndConvert(stream png2rm.PNG2RmService_
 		}
 	}
 
-	return nil // Indicate successful completion
-}
-
-// createHCLFile creates an HCL file required for the PNG to Remarkable conversion
-func createHCLFile(runPath string, filepath string) error {
-	// Open a new file for writing, create it if it doesn't exist
-	file, err := os.OpenFile(fmt.Sprintf("%s/CaptureToConvert.hcl", runPath), os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil { // Handle error in opening the file
-		return err
-	}
-	defer file.Close() // Ensure the file is closed after writing
-
-	// Write the expression needed for conversion into the HCL file
-	expression := fmt.Sprintf("image %s 300 0 0 1.32", runPath+"/ToConvert/"+filepath)
-	if _, err := file.Write([]byte(expression)); err != nil { // Handle error in writing to the file
-		return err
-	}
 	return nil // Indicate successful completion
 }
 
